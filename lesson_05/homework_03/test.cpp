@@ -24,7 +24,23 @@ int get_max(int argc, char *argv[]) {
     }
 }
 
+void is_numeric(const std::string &str) {
+    for (char ch : str) {
+        if (std::isdigit(ch)) {
+            std::cout << ch << " is numeric\n";
+        } else {
+            std::cout << ch << " is not numeric\n";
+        }
+    }
+}
+
+
+
 
 int main(int argc, char** argv) {
-    std::cout << "MAX_NUMBER = " << get_max(argc, argv) << '\n';
+    // std::cout << "MAX_NUMBER = " << get_max(argc, argv) << '\n';
+    
+    std::string str = "hel123o ^Z";
+    is_numeric(str);
+    
 }
