@@ -3,14 +3,16 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <map>
 
 // #include <limits> 
 // #include <climits> 
 
 #include "game.h"
 
-
-std::string name_file_scores = "scores.txt";
+namespace {
+    std::string name_file_scores = "scores.txt";        //TODO допустимо или есть вариант лучше?
+}
 
 bool is_number(const std::string &str) {   
     for (char ch : str) {
@@ -32,12 +34,9 @@ bool is_valid_int(const std::string &str) {
 
 bool is_number_in_range(const int MIN_NUMBER, const int user_number, const int MAX_NUMBER) {
     if (user_number < MIN_NUMBER || user_number > MAX_NUMBER) {
-        // std::cout << "is_number_in_range: true" << '\n';
         return false;
     }
-    // std::cout << "is_number_in_range: false" << '\n';
     return true;
-    
 }
 
 bool write_to_score_board(const std::string &user_name, const int attempts) {
@@ -50,6 +49,16 @@ bool write_to_score_board(const std::string &user_name, const int attempts) {
     file.close();
 }
 
+bool check_str_in_arr(const std::string &external_str, const std::vector<std::string> &arr) {
+    for (std::string str_in_arr : arr) {
+        int res = external_str.compare(str_in_arr);
+        if (res == 0) {
+            return true;
+        }
+    }
+    return false;
+}   
+
 void show_score_board() {
     std::cout <<  "High scores table:" << std::endl;
     std::fstream file{name_file_scores, std::fstream::in};
@@ -58,30 +67,35 @@ void show_score_board() {
         return;
     }
     std::string line;
+    std::vector<std::string> names;
+    // std::map<std::string, int>
     while (getline(file, line)) {
-        std::cout << line << std::endl;
+        std::string user_name;
+        for (char ch : line) {
+            if (ch == '\t') {
+                break;
+            }
+            user_name.push_back(ch);
+        }
+        bool res = check_str_in_arr(user_name, names);
+        if (!res) {
+            names.push_back(user_name);
+        }
+    }
+    for (std::string name : names) {
+        std::cout << name << '\n';
     }
     file.close();
 }
 
 int get_arg(int argc, char* argv[]) {
-    // std::cout << "argc " << argc << '\n';
-    // std::cout << "argv_0 " << argv[0] << '\n';
-    // std::cout << "argv_1 " << argv[1] << '\n';
-    // std::cout << "argv_2 " << argv[2] << '\n';
-
-
     if (argc == 1) {
-
         int default_max_number = 100;
         return default_max_number;
-    std::cout << "true " << '\n';
     }
-
     if (argc > 1) {
         const char* max = "-max";
         std::string key = argv[1];
-
         if (std::strcmp(argv[1], "-max") == 0) {   
             int max_number = std::stoi(argv[2]);
             std::cout << max_number << '\n';
@@ -93,7 +107,6 @@ int get_arg(int argc, char* argv[]) {
             std::cout << "Error! Invakid command.\n";
             return -1;
         }
-    // TODO не обработанная ветка
     } else {
         std::cout << "5 " << '\n';
 
@@ -116,7 +129,6 @@ int main(int argc, char *argv[]) {
     int attempts = 1;
     std::string invaition_message = "Enter your guess in range [" + std::to_string(MIN_NUMBER) + ".." +  std::to_string(MAX_NUMBER) + "]";
 
-    // std::cout << "Hidden_number " << hidden_number << std::endl;
     std::cout << "Hi! Enter your name, please:" << std::endl;
     std::getline (std::cin, user_name);
 
@@ -124,10 +136,6 @@ int main(int argc, char *argv[]) {
 
     while (true) {
         std::getline(std::cin, user_input);
-        
-        std::cerr << "is_string_number " << is_number(user_input) << '\n';
-        std::cerr << "is_valid_int " << is_valid_int(user_input) << '\n';
-        
         if (!is_number(user_input)) {
             std::cin.clear();
             std::cin.ignore(10000,'\n');
@@ -141,7 +149,6 @@ int main(int argc, char *argv[]) {
             continue;
         }
         int user_number = std::stoi(user_input);
-        std::cerr << "is_number_in_range " << is_number_in_range(MIN_NUMBER, user_number, MAX_NUMBER) << '\n';
         if (!is_number_in_range(MIN_NUMBER, user_number, MAX_NUMBER)) {
             std::cout << "Error! Number is out of range [" << MIN_NUMBER << ".." << MAX_NUMBER << "]" << std::endl;
             std::cout << invaition_message << std::endl;

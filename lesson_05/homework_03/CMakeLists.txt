@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.26)
 
 project(game)
 
-add_executable(game game.cpp)
+# add_executable(game game.cpp)
 
 add_executable(test test.cpp)
 

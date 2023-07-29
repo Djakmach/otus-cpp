@@ -1,4 +1,7 @@
+#include <iostream>
+#include <vector>
+
 #pragma once
 
-bool check_space_symbol();
-bool check_out_of_range(int MIN_NUMBER, int user_number, int MAX_NUMBER);
+
+bool check_str_in_arr(const std::string &external_str, const std::vector<std::string> &arr);
