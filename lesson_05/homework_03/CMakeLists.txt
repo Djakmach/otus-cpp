@@ -1,10 +1,19 @@
 cmake_minimum_required(VERSION 3.26)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
 project(game)
 
-add_executable(game game.cpp)
+add_executable(game 
+  game.cpp
+  utils.cpp)
 
-add_executable(test test.cpp)
+message("!!! ${CMAKE_SOURCE_DIR}")
 
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+target_include_directories(game PRIVATE
+  ${CMAKE_SOURCE_DIR}/iomodule/)
+
+# target_compile_features(test PUBLIC cxx_std_17)
+
+
