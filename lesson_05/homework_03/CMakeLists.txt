@@ -7,7 +7,8 @@ project(game)
 
 add_executable(game 
   game.cpp
-  utils.cpp)
+  utils.cpp
+  iomodule/io.cpp)
 
 message("!!! ${CMAKE_SOURCE_DIR}")
 
