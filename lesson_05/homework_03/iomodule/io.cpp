@@ -7,9 +7,7 @@
 #include "io.h"
 
 
-namespace {
-  extern std::string name_file_scores;
-} // namespace
+extern std::string name_file_scores;
 
 
 bool write_to_score_board(const std::string &user_name, const int attempts) {

@@ -1,5 +1,4 @@
 #include <iostream>
-// #include <format>
 #include <string>
 #include <fstream>
 #include <filesystem>
@@ -10,8 +9,8 @@
 #include <io.h>
 
 
+std::string name_file_scores = "scores.txt";        //TODO допустимо или есть вариант лучше?
 namespace {
-    std::string name_file_scores = "scores.txt";        //TODO допустимо или есть вариант лучше?
     const int MIN_NUMBER = 0;                           //TODO как поступить с переменными MIN_NUMBER, MAX_NUMBER, invaition_message?
     int MAX_NUMBER;
     std::string invaition_message;
