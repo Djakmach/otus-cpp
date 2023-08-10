@@ -1,6 +1,7 @@
 #include "World.h"
 #include "Painter.h"
 #include <fstream>
+#include <string>
 
 // Длительность одного тика симуляции.
 // Подробнее см. update()
@@ -65,10 +66,15 @@ World::World(const std::string& worldFilePath) {
         // объекта класса Ball со свойствами, прочитанными
         // выше, и его помещения в контейнер balls
 
+        Point center(x, y);
+        Velocity velocity(vx, vy);
+        Color color(red, green, blue);
+
+        Ball ball(center, velocity, color, radius);
         // После того как мы каким-то образом
         // сконструируем объект Ball ball;
         // добавьте его в конец контейнера вызовом
-        // balls.push_back(ball);
+        balls.push_back(ball);
     }
 }
 
