@@ -1,7 +1,7 @@
+#pragma once
+
 #include <string>
 #include <vector>
-
-#pragma once
 
 
 int is_valid_int(const std::string &str);

@@ -7,10 +7,9 @@
 #include "io.h"
 
 
-extern std::string name_file_scores;
 
 
-bool write_to_score_board(const std::string &user_name, const int attempts) {
+bool write_to_score_board(const std::string &user_name, const int attempts, const std::string& name_file_scores) {
 	std::fstream file{name_file_scores, std::fstream::app};
     if (!file.is_open()) {
       std::cout << "Error! File was not opened!" << std::endl;
@@ -21,7 +20,7 @@ bool write_to_score_board(const std::string &user_name, const int attempts) {
     return true;
 }
 
-bool show_score_board() {
+bool show_score_board(const std::string& name_file_scores) {
     std::cout <<  "High scores table:" << std::endl;
     std::fstream file{name_file_scores, std::fstream::in};
     if (!file.is_open()) {
@@ -60,7 +59,7 @@ bool show_score_board() {
               }
           }
       }
-      if (attempts_str != "") {
+      if (!attempts_str.empty()) {
           attempts_int = std::stoi(attempts_str);
       }
       if (track_record.count(user_name)) {
