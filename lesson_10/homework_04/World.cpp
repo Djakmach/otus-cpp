@@ -12,6 +12,11 @@ static constexpr double timePerTick = 0.001;
  * Конструирует объект мира для симуляции
  * @param worldFilePath путь к файлу модели мира
  */
+
+std::istream& operator>>(std::istream& stream, const Point& point) {
+    stream >> point.x >> point.y;
+    return stream;
+}
 World::World(const std::string& worldFilePath) {
 
     std::ifstream stream(worldFilePath);
@@ -67,7 +72,8 @@ World::World(const std::string& worldFilePath) {
         // выше, и его помещения в контейнер balls
 
         Point center(x, y);
-        Velocity velocity(vx, vy);
+        Point velocity_vector(vx, vy);
+        Velocity velocity(velocity_vector);
         Color color(red, green, blue);
 
         Ball ball(center, velocity, color, radius);

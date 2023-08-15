@@ -64,5 +64,5 @@ double Ball::getRadius() const {
 double Ball::getMass() const {
     // const double PI = acos(-1.0);
     // return PI * pow(_radius, 3.0) * 4.0 / 3.0;
-    return M_PI * pow(_radius, 3.0) * 4.0 / 3.0;
+    return _mass;
 }
