@@ -5,8 +5,10 @@
 
 class Ball {
 public:
-    Ball (Point center, Velocity velocity, Color color, double radius)
-        :_center{center}, _velocity{velocity}, _color{color}, _radius{radius} {};
+    Ball (Point& center, Velocity& velocity, Color& color, double& radius)
+        :_center{center}, _velocity{velocity}, _color{color}, _radius{radius} {
+            _mass = M_PI * pow(_radius, 3.0) * 4.0 / 3.0;
+        };
     void setVelocity(const Velocity& velocity);
     Velocity getVelocity() const;
     void draw(Painter& painter) const;
