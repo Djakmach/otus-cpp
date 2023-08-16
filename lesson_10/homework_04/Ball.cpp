@@ -66,3 +66,7 @@ double Ball::getMass() const {
     // return PI * pow(_radius, 3.0) * 4.0 / 3.0;
     return _mass;
 }
+
+bool Ball::getisCollidable() const {
+    return _isCollidable;
+}

@@ -22,13 +22,20 @@ void Physics::update(std::vector<Ball>& balls, const size_t ticks) const {
 
 void Physics::collideBalls(std::vector<Ball>& balls) const {
     for (auto a = balls.begin(); a != balls.end(); ++a) {
+        // Проверяем свойство шарика "а"
+        if (!a->getisCollidable()) {
+            continue;
+        }
         for (auto b = std::next(a); b != balls.end(); ++b) {
+            // Проверяем свойство шарика "b"
+            if (!b->getisCollidable()) {
+                continue;
+            }
             const double distanceBetweenCenters2 =
                 distance2(a->getCenter(), b->getCenter());
             const double collisionDistance = a->getRadius() + b->getRadius();
             const double collisionDistance2 =
                 collisionDistance * collisionDistance;
-
             if (distanceBetweenCenters2 < collisionDistance2) {
                 processCollision(*a, *b, distanceBetweenCenters2);
             }
