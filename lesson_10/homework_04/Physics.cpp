@@ -51,7 +51,9 @@ void Physics::collideWithBox(std::vector<Ball>& balls) const {
         auto isOutOfRange = [](double v, double lo, double hi) {
             return v < lo || v > hi;
         };
-
+        if (!ball.getisCollidable()) {
+            continue;
+        }
         if (isOutOfRange(p.x, topLeft.x + r, bottomRight.x - r)) {
             Point vector = ball.getVelocity().vector();
             vector.x = -vector.x;
