@@ -39,7 +39,7 @@ private:
 
 class Max : public IStatistics {
 public:
-	Max() : m_max{std::numeric_limits<double>::min()} {}
+	Max() : m_max{-std::numeric_limits<double>::max()} {}
 
 
 	void update(double next) override {
@@ -80,7 +80,7 @@ public:
 
 private:
 	double sum_;
-	int count_;	    // TODO подозреваю что так делать опасно, 
+	size_t count_;	    // TODO подозреваю что так делать опасно, 
 					// поскольку в момент деления будет преобразование типа в double, 
 					// зато защита от 1.5 землекопа
 };
@@ -113,7 +113,7 @@ class StdDeviation : public IStatistics {
 	private:
 		std::vector<double> numbers_;
 		double sum_;
-		int count_;
+		size_t count_;
 };
 
 int main() {
