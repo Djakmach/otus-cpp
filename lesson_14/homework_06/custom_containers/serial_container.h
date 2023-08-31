@@ -1,13 +1,10 @@
-#include <iostream>
-#include <array>
-#include <vector>
-
+template <typename T>
 class SerialConteiner {
 public:
     SerialConteiner() : _size{0}, _data{nullptr} {}
 
-    void push_back(int value) {
-        int* new_space_data = new int[_size + 1];
+    void push_back(T value) {
+        T* new_space_data = new T[_size + 1];
 
         for (size_t i = 0; i < _size; ++i) {
             new_space_data[i] = _data[i];
@@ -20,10 +17,10 @@ public:
 
     }
 
-    void insert(size_t index, int value) {
+    void insert(size_t index, T value) {
         if (index > _size) throw std::string{"Error"};
         ++_size;
-        int* new_space_data = new int[_size];
+        T* new_space_data = new T[_size];
         bool flag = false;
         for (size_t i = 0; i < _size; ++i){ 
             if (i == index) {
@@ -59,7 +56,7 @@ public:
 
     }
 
-    int get_value(size_t index) const {
+    T get_value(size_t index) const {
         return _data[index];
     }
 
@@ -71,11 +68,15 @@ public:
         delete[] _data;
     }
 
-    int& operator[](int i) {
+    T& operator[](size_t i) {
         return _data[i];
     }
 
-    // TODO как реализовать перегрузку  << внутри class
+    const T& operator[](size_t i) const {
+        return _data[i];
+    }
+
+    // TODO как реализовать operator<< внутри class
     // std::ostream& operator<<(std::ostream& stream, this) 
     // {
     //     stream << '[';
@@ -89,46 +90,5 @@ public:
 
 private:
     size_t _size;
-    int* _data;
+    T* _data;
 };
-
-
-std::ostream& operator<<(std::ostream& stream, const SerialConteiner& my_list) {
-    stream << '[';
-    size_t size = my_list.get_size();
-    for (size_t i = 0; i < size; ++i) {
-        stream << my_list.get_value(i);
-        // проверка на последний символ
-        if (i != size-1) stream << ", ";
-    }
-    stream << ']' << '\n';
-    return stream;
-
-}
-
-int main() {
-
-    SerialConteiner x;
-    x.push_back(4);
-    x.push_back(5);
-
-    x.print();
-    std::cout << x;
-
-    int* ptr = &x[0];
-    std::cout << *ptr << '\n';
-    ++ptr;
-    std::cout << *ptr << '\n';
-
-    std::cout << "size: " << x.get_size() << '\n' << '\n';
-
-    x.insert(0, 9);
-    std::cout << x << "\n\n";
-
-    x.erase(2);
-    std::cout << x << "\n\n";
-
- 
-
-    // std::array<int> a;
-}
