@@ -6,7 +6,6 @@ struct Node {
 };
 
 
-
 template<typename T>
 class ListContainer {
 public:
@@ -24,18 +23,17 @@ public:
         _last = new_node;
         ++_size;
         if (_size == 1) _first = new_node;
-
     }
 
-    T get_value(size_t index) {
+    T get_value(size_t index) const {
         Node<T>* current_node = _last;
-        for (size_t i=_size-1; i != index; --i) {
+        for (size_t i=_size-1; i > index; --i) {
             current_node = current_node->prev;
         }
         return current_node->value;
     }
 
-    void print() {
+    void print() const{
         Node<T>* current_node = _first;
         std::cout << "[";
         for (size_t i=0; i < _size; ++i) {
@@ -43,9 +41,48 @@ public:
             if (i < _size - 1) std::cout << ", "; 
             current_node = current_node->next;
         }
-        std::cout << "]";
-
+        std::cout << "]\n";
     }
+
+    size_t get_size() const {
+        return _size;
+    }
+
+    void insert(size_t index, T value) {
+        Node<T>* current_node = _first;
+        Node<T>* new_node = new Node<T>;
+        new_node->value = value;
+        if (index == 0) {
+            new_node->next = current_node;
+            _first = new_node;
+            current_node->prev = new_node;
+            ++_size;
+        }
+
+        else if (index == _size) {
+            this->push_back(value);
+        }
+
+        else {
+            for (size_t i=0; i <= index+1; ++i) {
+                if (i == index-1) {
+                    new_node->next = current_node->next;
+                    current_node->next = new_node;
+                    new_node->prev = current_node;
+                }
+                if (i < _size) {
+                    if (i == index+1) {
+                        current_node->prev = new_node;
+                    break;
+                    }
+                }
+                current_node = current_node->next;
+            }
+            ++_size;
+        }
+        
+    }
+
 
 private:
     size_t  _size;

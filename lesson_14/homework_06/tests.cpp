@@ -22,7 +22,7 @@ std::ostream& operator<<(std::ostream& stream, const SerialConteiner<T>& my_list
 
 
 template <typename T>
-void test(SerialConteiner<T> x) {
+void test_push_back(T& x) {
     x.push_back(0);
     x.push_back(1);
     x.push_back(2);
@@ -35,7 +35,16 @@ void test(SerialConteiner<T> x) {
     x.push_back(9);
 
     x.print();
-    std::cout << x;
+    // std::cout << x;
+}
+
+template <typename T>
+void test_get_value(T x, size_t index) {
+    std::cout << "get value with index " << index << ':' << x.get_value(index) << '\n';
+}
+
+template <typename T>
+void test_increment_ptr(T x) {
 
     T* ptr = &(x[0]);
     std::cout << ptr << ": " << *ptr << '\n';
@@ -43,19 +52,26 @@ void test(SerialConteiner<T> x) {
     std::cout << ptr << ": " << *ptr << '\n';
     ++ptr;
     std::cout << ptr << ": " << *ptr << "\n\n";
+}
 
+template <typename T>
+void test_get_size(T x) {
     std::cout << "size: " << x.get_size() << '\n';
     std::cout << "sizeof: " << sizeof(x) << '\n' << '\n';   // TODO почему то размер Контейнера одинаковый при SerialConteiner<int> и SerialConteiner<double>
+}
 
+template <typename T>
+void test_insert(T x, size_t index) {
+    std::cout << "insert_position: " << index << "\n";
+    x.insert(index, 42);
+    x.print();
+    // std::cout << "x: " << x << "\n\n";
+}
 
-    size_t insert_position = 4;
-    std::cout << "insert_position: " << insert_position << "\n";
-    x.insert(insert_position, 42);
-    std::cout << "x: " << x << "\n\n";
-
-    size_t erase_position = 4;
-    std::cout << "erase_position: " << erase_position << "\n";
-    x.erase(erase_position);
+template <typename T>
+void test_erase(T x, size_t index) {
+    std::cout << "erase_position: " << index << "\n";
+    x.erase(index);
     std::cout << "x: " << x << "\n";
 }
 
@@ -75,20 +91,26 @@ int main() {
 
 
     ListContainer<int> z;
-    z.push_back(42);
-    z.push_back(33);
-    z.push_back(44);
+    test_push_back(z);
 
-    std::cout << "get_value(0): " << z.get_value(0) << '\n';
-    std::cout << "get_value(1): " << z.get_value(1) << '\n';
-    std::cout << "get_value(2): " << z.get_value(2) << '\n';
+    test_get_value(z, 5);
 
-    z.print();
+    test_get_size(z);
 
+    test_insert(z, 0);
+    test_insert(z, 10);
 
-
-
+    
+    
 
 
+//     std::cout << "get_value(0): " << z.get_value(0) << '\n';
+//     std::cout << "get_value(1): " << z.get_value(1) << '\n';
+//     std::cout << "get_value(2): " << z.get_value(2) << '\n';
 
+//     z.print();
+
+//     z.insert(1, 42);
+
+//     z.print();
 }
