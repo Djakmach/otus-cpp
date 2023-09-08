@@ -17,12 +17,24 @@ std::ostream& operator<<(std::ostream& stream, const SerialConteiner<T>& my_list
     }
     stream << ']' << '\n';
     return stream;
+}
 
+template <typename T>
+std::ostream& operator<<(std::ostream& stream, const ListContainer<T>& my_list) {
+    stream << '[';
+    size_t size_list = my_list.get_size();
+    for (size_t i=0; i < size_list; ++i) {
+        stream << my_list.get_value(i);
+        if (i < size_list - 1) std::cout << ", "; 
+    }
+    stream << ']' << '\n';
+    return stream;
 }
 
 
 template <typename T>
 void test_push_back(T& x) {
+    std::cout << "---------test_push_back--------" << "\n";
     x.push_back(0);
     x.push_back(1);
     x.push_back(2);
@@ -35,82 +47,93 @@ void test_push_back(T& x) {
     x.push_back(9);
 
     x.print();
-    // std::cout << x;
+    std::cout << "---------------------------------" << "\n\n";
+
 }
 
 template <typename T>
-void test_get_value(T x, size_t index) {
-    std::cout << "get value with index " << index << ':' << x.get_value(index) << '\n';
+void test_get_value(const T& x, size_t index) {
+    std::cout << "--------test_get_value--------" << "\n\n";
+    std::cout << "get_value(" << index << "): " << x.get_value(index) << '\n';
+    std::cout << "---------------------------------" << "\n\n";
+
 }
 
 template <typename T>
 void test_increment_ptr(T x) {
+    std::cout << "-----test_increment_ptr-------" << "\n";
 
     T* ptr = &(x[0]);
     std::cout << ptr << ": " << *ptr << '\n';
     ++ptr;
     std::cout << ptr << ": " << *ptr << '\n';
     ++ptr;
-    std::cout << ptr << ": " << *ptr << "\n\n";
+    std::cout << ptr << ": " << *ptr << "\n";
+    std::cout << "---------------------------------" << "\n\n";
+    
 }
 
 template <typename T>
-void test_get_size(T x) {
+void test_get_size(const T& x) {
+    std::cout << "---------test_get_size------------" << "\n";
     std::cout << "size: " << x.get_size() << '\n';
-    std::cout << "sizeof: " << sizeof(x) << '\n' << '\n';   // TODO почему то размер Контейнера одинаковый при SerialConteiner<int> и SerialConteiner<double>
+    std::cout << "sizeof: " << sizeof(x) << '\n';   // TODO почему то размер Контейнера одинаковый при SerialConteiner<int> и SerialConteiner<double>
+    std::cout << "---------------------------------" << "\n\n";
+
 }
 
 template <typename T>
-void test_insert(T x, size_t index) {
-    std::cout << "insert_position: " << index << "\n";
-    x.insert(index, 42);
+void test_insert(T& x) {
+    std::cout << "---------test_insert------------" << "\n";
+    std::cout << "insert(0, 10) " << "\n";
+    x.insert(0, 10);
     x.print();
-    // std::cout << "x: " << x << "\n\n";
+    std::cout << "insert(4, 20) " << "\n";
+    x.insert(4, 20);
+    x.print();
+    std::cout << "push_back(30) " << "\n";
+    x.push_back(30);
+    x.print();
+
+
+    std::cout << "---------------------------------" << "\n\n";
 }
 
 template <typename T>
-void test_erase(T x, size_t index) {
-    std::cout << "erase_position: " << index << "\n";
-    x.erase(index);
-    std::cout << "x: " << x << "\n";
+void test_erase(T& x) {
+    std::cout << "---------test_erase----------" << "\n";
+    std::cout << "erase(" << 2 << "): " << "\n";
+    x.erase(2);
+    x.get_size();
+    std::cout << "erase(" << 3 << "): " << "\n";
+    x.erase(3);
+    x.get_size();
+    std::cout << "erase(" << 5 << "): " << "\n";
+    x.erase(4);
+    x.get_size();
+    std::cout << "x: " << x;
+    std::cout << "---------------------------------" << "\n\n";
 }
 
+template<typename T>
+void all_tests_for_container(T& container) {
+    
+    test_push_back(container);
+    test_erase(container);
+    test_insert(container);
+}
 
 int main() {
-    // SerialConteiner<int> x;
-    // SerialConteiner<double> y;
 
-    // std::cout << "---------------------------------" << "\n";
-    // std::cout << "SerialConteiner<int>" << "\n";
-    // test(x);
-    // std::cout << "---------------------------------" << "\n\n";
+    SerialConteiner<int> x;
+    std::cout << "SerialConteiner<int>" << "\n\n";
+    all_tests_for_container(x);
 
-    // std::cout << "SerialConteiner<double>" << "\n";
-    // test(y);
-    // std::cout << "---------------------------------" << "\n\n";
-
+    SerialConteiner<double> y;
+    std::cout << "\n\n\nSerialConteiner<double>" << "\n\n";
+    all_tests_for_container(y);
 
     ListContainer<int> z;
-    test_push_back(z);
-
-    test_get_value(z, 5);
-
-    test_get_size(z);
-
-    test_insert(z, 0);
-    test_insert(z, 10);
-
-    
-    
-
-
-//     std::cout << "get_value(0): " << z.get_value(0) << '\n';
-//     std::cout << "get_value(1): " << z.get_value(1) << '\n';
-//     std::cout << "get_value(2): " << z.get_value(2) << '\n';
-
-//     z.print();
-
-//     z.insert(1, 42);
-
-//     z.print();
+    std::cout << "\n\n\nListContainer<int>" << "\n\n";
+    all_tests_for_container(z);
 }

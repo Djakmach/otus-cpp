@@ -9,10 +9,10 @@ struct Node {
 template<typename T>
 class ListContainer {
 public:
-    ListContainer() : _size{0}, _last{nullptr} {
+    ListContainer() : _size{0}, _first{nullptr}, _last{nullptr} {
     }
 
-    void push_back(T value) {
+    void push_back(const T& value) {
         Node<T>* new_node = new Node<T>{};
         new_node->prev = _last;
         new_node->next = nullptr;
@@ -26,6 +26,9 @@ public:
     }
 
     T get_value(size_t index) const {
+        // if (index < 0 || index >= _size) {
+        //     return error;
+        // }
         Node<T>* current_node = _last;
         for (size_t i=_size-1; i > index; --i) {
             current_node = current_node->prev;
@@ -35,9 +38,11 @@ public:
 
     void print() const{
         Node<T>* current_node = _first;
+
         std::cout << "[";
         for (size_t i=0; i < _size; ++i) {
             std::cout << current_node->value;
+            // std::cout << current_node->value << ": " << current_node << "\tprev: " << current_node->prev << "\tnext: " << current_node->next << '\n';
             if (i < _size - 1) std::cout << ", "; 
             current_node = current_node->next;
         }
@@ -53,16 +58,15 @@ public:
         Node<T>* new_node = new Node<T>;
         new_node->value = value;
         if (index == 0) {
+            new_node->prev = nullptr;
             new_node->next = current_node;
             _first = new_node;
             current_node->prev = new_node;
             ++_size;
         }
-
         else if (index == _size) {
             this->push_back(value);
         }
-
         else {
             for (size_t i=0; i <= index+1; ++i) {
                 if (i == index-1) {
@@ -80,9 +84,59 @@ public:
             }
             ++_size;
         }
-        
     }
 
+    void erase(size_t index) {
+        if (index < 0 || index >= _size) {
+            return;
+        }
+
+        Node<T>* current_node = _first;
+
+        if (index == 0) {
+            _first = _first->next;
+            if (_first) _first->prev = nullptr;
+            delete current_node;
+        }
+        else if (index == _size - 1) {
+            current_node = _last;
+            _last = _last->prev;
+            _last->next = nullptr;
+            delete current_node;
+        } else {
+            for (size_t i = 0; i < index; ++i) {
+                if (current_node->next) current_node = current_node->next;
+            }
+            if (current_node->next) current_node->prev->next = current_node->next;
+            if (current_node->prev) current_node->next->prev = current_node->prev;
+            delete current_node;
+        }
+        --_size;
+    }
+
+    T operator[](const size_t index) {
+        return this->get_value(index);
+    }
+
+    const T& operator[](const size_t index) const {
+        return this->get_value(index);
+    }
+
+    ~ListContainer() {
+        Node<T>* current_node = _first;
+
+        if (current_node) {
+            for (size_t i=0; i < _size; ++i) {
+                if (i == _size - 1) {
+                    delete current_node;
+                    break;
+                }       
+                current_node = current_node->next;
+                delete current_node->prev;
+            }
+            _size = 0;
+        }
+    }
 
 private:
     size_t  _size;
