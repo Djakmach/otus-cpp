@@ -9,8 +9,5 @@ add_executable(tests
     custom_containers/serial_container.h
     custom_containers/list_container.h)
 
-
-add_executable(test_2 test_2.cpp)
-
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/custom_containers/)
 
