@@ -76,17 +76,25 @@ public:
         return _data[i];
     }
 
-    // TODO как реализовать operator<< внутри class
-    // std::ostream& operator<<(std::ostream& stream, this) 
-    // {
-    //     stream << '[';
-    //     for (size_t i = 0; i < list._size; ++i) {
-    //         stream << list.get_value(i) << ", ";
-    //     }
-    //     stream << ']';
-    //     return stream;
+    friend std::ostream& operator<<(std::ostream& stream, const SerialConteiner<T>& container) {
+        stream << '[';
+        size_t size = container.get_size();
+        for (size_t i = 0; i < size; ++i) {
+            stream << container.get_value(i);
+            // проверка на последний символ
+            if (i != size-1) stream << ", ";
+        }
+        stream << ']' << '\n';
+        return stream;
+    }
 
-    // }
+    std::ostream& operator<<(std::ostream& stream) {
+        stream << '[';
+        for (size_t i = 0; i < get_size(); ++i) {
+            stream << get_value(i) << ", ";
+        }
+        return stream << ']';
+    }
 
 private:
     size_t _size;

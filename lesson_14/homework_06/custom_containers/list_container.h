@@ -41,8 +41,8 @@ public:
 
         std::cout << "[";
         for (size_t i=0; i < _size; ++i) {
-            std::cout << current_node->value;
-            // std::cout << current_node->value << ": " << current_node << "\tprev: " << current_node->prev << "\tnext: " << current_node->next << '\n';
+            // std::cout << current_node->value;
+            std::cout << current_node->value << ": " << current_node << "\tprev: " << current_node->prev << "\tnext: " << current_node->next << '\n';
             if (i < _size - 1) std::cout << ", "; 
             current_node = current_node->next;
         }
@@ -52,6 +52,13 @@ public:
     size_t get_size() const {
         return _size;
     }
+
+    Node<T>* search_node_by_index(const size_t index) {
+        Node<T>* current_node = _first;
+        for (size_t = 0; i <= index; ++i) current_node = current_node->next;
+        return current_node;
+    }
+
 
     void insert(size_t index, T value) {
         Node<T>* current_node = _first;
@@ -104,9 +111,7 @@ public:
             _last->next = nullptr;
             delete current_node;
         } else {
-            for (size_t i = 0; i < index; ++i) {
-                if (current_node->next) current_node = current_node->next;
-            }
+            current_node = search_node_by_index(index)
             if (current_node->next) current_node->prev->next = current_node->next;
             if (current_node->prev) current_node->next->prev = current_node->prev;
             delete current_node;
@@ -123,18 +128,11 @@ public:
     }
 
     ~ListContainer() {
-        Node<T>* current_node = _first;
-
-        if (current_node) {
-            for (size_t i=0; i < _size; ++i) {
-                if (i == _size - 1) {
-                    delete current_node;
-                    break;
-                }       
-                current_node = current_node->next;
-                delete current_node->prev;
-            }
-            _size = 0;
+        while (_first) {
+            auto next = _first->next;
+            std::cout << _first << '\n';
+            delete _first;
+            _first = next;
         }
     }
 

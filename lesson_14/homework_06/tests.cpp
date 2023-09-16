@@ -46,7 +46,7 @@ void test_push_back(T& x) {
     x.push_back(8);
     x.push_back(9);
 
-    x.print();
+    std::cout << x;
     std::cout << "---------------------------------" << "\n\n";
 
 }
@@ -119,6 +119,7 @@ template<typename T>
 void all_tests_for_container(T& container) {
     
     test_push_back(container);
+    std::cout << container;
     test_erase(container);
     test_insert(container);
 }
