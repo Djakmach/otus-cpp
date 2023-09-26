@@ -130,7 +130,7 @@ public:
     ~ListContainer() {
         while (_first) {
             auto next = _first->next;
-            std::cout << _first << '\n';
+            // std::cout << _first << '\n';
             delete _first;
             _first = next;
         }
