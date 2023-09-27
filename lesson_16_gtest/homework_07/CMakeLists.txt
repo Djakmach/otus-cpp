@@ -14,13 +14,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
-add_executable(containers_tests 
-  list_container_tests.cpp 
-  serial_container_tests.cpp
+add_executable(containers_test 
+  list_container_test.cpp 
+  serial_container_test.cpp
 )
 
 target_include_directories(
-  containers_tests PUBLIC ${CMAKE_SOURCE_DIR}/../../lesson_14/homework_06/custom_containers
+  containers_test PUBLIC ${CMAKE_SOURCE_DIR}/../../lesson_14/homework_06/custom_containers
 )
 
-target_link_libraries(containers_tests PUBLIC gtest_main)
+target_link_libraries(containers_test PUBLIC gtest_main)

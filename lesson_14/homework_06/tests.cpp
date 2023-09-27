@@ -126,15 +126,26 @@ void all_tests_for_container(T& container) {
 
 int main() {
 
-    SerialConteiner<int> x;
-    std::cout << "SerialConteiner<int>" << "\n\n";
-    all_tests_for_container(x);
+    // SerialConteiner<int> x;
+    // std::cout << "SerialConteiner<int>" << "\n\n";
+    // all_tests_for_container(x);
 
-    SerialConteiner<double> y;
-    std::cout << "\n\n\nSerialConteiner<double>" << "\n\n";
-    all_tests_for_container(y);
+    // SerialConteiner<double> y;
+    // std::cout << "\n\n\nSerialConteiner<double>" << "\n\n";
+    // all_tests_for_container(y);
 
-    ListContainer<int> z;
-    std::cout << "\n\n\nListContainer<int>" << "\n\n";
-    all_tests_for_container(z);
+    // ListContainer<int> z;
+    // std::cout << "\n\n\nListContainer<int>" << "\n\n";
+    // all_tests_for_container(z);
+
+    ListContainer<int> k;
+    k.push_back(0);    
+    k.push_back(1);    
+    k.push_back(2);
+    std::cout << k.get_size() << '\n';
+    k.print();
+
+    k.erase(1);   
+    k.print();
+
 }

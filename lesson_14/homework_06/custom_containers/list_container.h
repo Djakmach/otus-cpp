@@ -12,6 +12,14 @@ public:
     ListContainer() : _size{0}, _first{nullptr}, _last{nullptr} {
     }
 
+
+    // TODO возможно ли реализовать конструктор 
+    // ListContainer(args) {
+    //     for arg in *args:
+    //         this.push_back(arg)
+    // }
+
+
     void push_back(const T& value) {
         Node<T>* new_node = new Node<T>{};
         new_node->prev = _last;
@@ -26,12 +34,12 @@ public:
     }
 
     T get_value(size_t index) const {
-        // if (index < 0 || index >= _size) {
-        //     return error;
-        // }
-        Node<T>* current_node = _last;
-        for (size_t i=_size-1; i > index; --i) {
-            current_node = current_node->prev;
+        if (index < 0 || index >= _size) {
+            return -1;
+        }
+        Node<T>* current_node = _first;
+        for (size_t i=0; i < index; ++i) {
+            current_node = current_node->next;
         }
         return current_node->value;
     }
@@ -41,8 +49,8 @@ public:
 
         std::cout << "[";
         for (size_t i=0; i < _size; ++i) {
-            // std::cout << current_node->value;
-            std::cout << current_node->value << ": " << current_node << "\tprev: " << current_node->prev << "\tnext: " << current_node->next << '\n';
+            std::cout << current_node->value;
+            // std::cout << current_node->value << ": " << current_node << "\tprev: " << current_node->prev << "\tnext: " << current_node->next << '\n';
             if (i < _size - 1) std::cout << ", "; 
             current_node = current_node->next;
         }
@@ -55,7 +63,7 @@ public:
 
     Node<T>* search_node_by_index(const size_t index) {
         Node<T>* current_node = _first;
-        for (size_t = 0; i <= index; ++i) current_node = current_node->next;
+        for (size_t i = 0; i < index; ++i) current_node = current_node->next;
         return current_node;
     }
 
@@ -64,7 +72,15 @@ public:
         Node<T>* current_node = _first;
         Node<T>* new_node = new Node<T>;
         new_node->value = value;
-        if (index == 0) {
+
+        if (_size == 0) {
+            _first = new_node;
+            _last = new_node;
+            new_node->prev = nullptr;
+            new_node->next = nullptr;
+            ++_size;
+        }
+        else if (index == 0) {
             new_node->prev = nullptr;
             new_node->next = current_node;
             _first = new_node;
@@ -98,20 +114,19 @@ public:
             return;
         }
 
-        Node<T>* current_node = _first;
-
         if (index == 0) {
-            _first = _first->next;
-            if (_first) _first->prev = nullptr;
-            delete current_node;
+            Node<T>* second_node = _first->next;
+            delete _first;
+            _first = second_node;
+            _first->prev = nullptr;
         }
         else if (index == _size - 1) {
-            current_node = _last;
-            _last = _last->prev;
+            Node<T>* penultimate_node = _last->prev;
+            delete _last;
+            _last = penultimate_node;
             _last->next = nullptr;
-            delete current_node;
         } else {
-            current_node = search_node_by_index(index)
+            Node<T>* current_node = search_node_by_index(index);
             if (current_node->next) current_node->prev->next = current_node->next;
             if (current_node->prev) current_node->next->prev = current_node->prev;
             delete current_node;
