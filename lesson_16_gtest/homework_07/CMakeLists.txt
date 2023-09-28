@@ -20,7 +20,7 @@ add_executable(containers_test
 )
 
 target_include_directories(
-  containers_test PUBLIC ${CMAKE_SOURCE_DIR}/../../lesson_14/homework_06/custom_containers
+  containers_test PUBLIC ${CMAKE_SOURCE_DIR}/../../lesson_14_containers/homework_06/custom_containers
 )
 
 target_link_libraries(containers_test PUBLIC gtest_main)

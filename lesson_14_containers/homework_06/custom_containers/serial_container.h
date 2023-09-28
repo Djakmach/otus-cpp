@@ -13,8 +13,21 @@ public:
         }
     }
 
+    SerialConteiner& operator=(SerialConteiner& other) {
+        if (this != &other) {
+            _size = other._size;
+            _data = new T[_size];
+            for (size_t i = 0; i < _size; ++i) {
+            _data[i] = other[i];
+        }
+        }
+        return *this;
+    }
+
+
     SerialConteiner& operator=(SerialConteiner&& other) {
         if (this != &other) { 
+            
             _size = other._size;
             _data = other._data;
             other._size = 0;

@@ -108,7 +108,7 @@ TEST_F(InitTestListContainer, get_size){
   ASSERT_EQ(container.get_size(), 2);
 }
 
-TEST_F(InitTestListContainer, copy) {
+TEST_F(InitTestListContainer, operator_equal) {
   container.push_back(value_0);
   container.push_back(value_1);
   container.push_back(value_2);
@@ -123,7 +123,7 @@ TEST_F(InitTestListContainer, copy) {
   ASSERT_EQ(new_container[2], container[2]);
 }
 
-TEST_F(InitTestListContainer, copy_2) {
+TEST_F(InitTestListContainer, copy_constructor) {
   container.push_back(value_0);
   container.push_back(value_1);
   container.push_back(value_2);
@@ -144,6 +144,19 @@ TEST_F(InitTestListContainer, move) {
   container.push_back(value_2);
 
   ListContainer<int> new_container;
+  new_container = std::move(container);
+
+  ASSERT_EQ(container.get_size(), 0);
+  ASSERT_EQ(new_container.get_size(), 3);
+}
+
+TEST_F(InitTestListContainer, move_in_not_empty_container) {
+  container.push_back(value_0);
+  container.push_back(value_1);
+  container.push_back(value_2);
+  ListContainer<int> new_container;
+  new_container.push_back(value_0);
+
   new_container = std::move(container);
 
   ASSERT_EQ(container.get_size(), 0);
