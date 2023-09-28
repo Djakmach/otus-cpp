@@ -107,3 +107,45 @@ TEST_F(InitTestListContainer, get_size){
   container.push_back(value_1);
   ASSERT_EQ(container.get_size(), 2);
 }
+
+TEST_F(InitTestListContainer, copy) {
+  container.push_back(value_0);
+  container.push_back(value_1);
+  container.push_back(value_2);
+
+  ListContainer<int> new_container = container;
+
+  ASSERT_NE(&new_container, &container) << "new_container is old_container";
+  ASSERT_EQ(container.get_size(), 3);
+  ASSERT_EQ(new_container.get_size(), 3);
+  ASSERT_EQ(new_container[0], container[0]);
+  ASSERT_EQ(new_container[1], container[1]);
+  ASSERT_EQ(new_container[2], container[2]);
+}
+
+TEST_F(InitTestListContainer, copy_2) {
+  container.push_back(value_0);
+  container.push_back(value_1);
+  container.push_back(value_2);
+
+  ListContainer<int> new_container(container);
+
+  ASSERT_NE(&new_container, &container) << "new_container is old_container";
+  ASSERT_EQ(container.get_size(), 3);
+  ASSERT_EQ(new_container.get_size(), 3);
+  ASSERT_EQ(new_container[0], container[0]);
+  ASSERT_EQ(new_container[1], container[1]);
+  ASSERT_EQ(new_container[2], container[2]);
+}
+
+TEST_F(InitTestListContainer, move) {
+  container.push_back(value_0);
+  container.push_back(value_1);
+  container.push_back(value_2);
+
+  ListContainer<int> new_container;
+  new_container = std::move(container);
+
+  ASSERT_EQ(container.get_size(), 0);
+  ASSERT_EQ(new_container.get_size(), 3);
+}

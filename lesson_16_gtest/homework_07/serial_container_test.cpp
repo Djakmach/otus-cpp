@@ -142,3 +142,57 @@ TEST(TestSerialContainer_Int, get_size){
   container.push_back(value_1);
   ASSERT_EQ(container.get_size(), 2);
 }
+
+TEST(TestSerialContainer_Int, copy) {
+  int value_0 = 0;
+  int value_1 = 1;
+  int value_2 = 2;
+  SerialConteiner<int> container;
+  container.push_back(value_0);
+  container.push_back(value_1);
+  container.push_back(value_2);
+
+  SerialConteiner<int> new_container = container;
+
+  ASSERT_NE(&new_container, &container) << "new_container is old_container";
+  ASSERT_EQ(container.get_size(), 3);
+  ASSERT_EQ(new_container.get_size(), 3);
+  ASSERT_EQ(new_container[0], container[0]);
+  ASSERT_EQ(new_container[1], container[1]);
+  ASSERT_EQ(new_container[2], container[2]);
+}
+
+TEST(TestSerialContainer_Int, copy_2) {
+  int value_0 = 0;
+  int value_1 = 1;
+  int value_2 = 2;
+  SerialConteiner<int> container;
+  container.push_back(value_0);
+  container.push_back(value_1);
+  container.push_back(value_2);
+
+  SerialConteiner<int> new_container(container);
+
+  ASSERT_NE(&new_container, &container) << "new_container is old_container";
+  ASSERT_EQ(container.get_size(), 3);
+  ASSERT_EQ(new_container.get_size(), 3);
+  ASSERT_EQ(new_container[0], container[0]);
+  ASSERT_EQ(new_container[1], container[1]);
+  ASSERT_EQ(new_container[2], container[2]);
+}
+
+TEST(TestSerialContainer_Int, move) {
+  int value_0 = 0;
+  int value_1 = 1;
+  int value_2 = 2;
+  SerialConteiner<int> container;
+  container.push_back(value_0);
+  container.push_back(value_1);
+  container.push_back(value_2);
+
+  SerialConteiner<int> new_container;
+  new_container = std::move(container);
+
+  ASSERT_EQ(container.get_size(), 0);
+  ASSERT_EQ(new_container.get_size(), 3);
+}
