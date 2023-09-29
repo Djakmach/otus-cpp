@@ -106,13 +106,6 @@ public:
         return _size;
     }
 
-    Node<T>* search_node_by_index(const size_t index) {
-        Node<T>* current_node = _first;
-        for (size_t i = 0; i < index; ++i) current_node = current_node->next;
-        return current_node;
-    }
-
-
     void insert(size_t index, T value) {
         Node<T>* current_node = _first;
         Node<T>* new_node = new Node<T>;
@@ -201,4 +194,10 @@ private:
     size_t  _size;
     Node<T>* _last;
     Node<T>* _first;
+
+    Node<T>* search_node_by_index(const size_t index) {
+        Node<T>* current_node = _first;
+        for (size_t i = 0; i < index; ++i) current_node = current_node->next;
+        return current_node;
+    }
 };
